@@ -22,6 +22,7 @@ from sklearn.feature_selection import RFECV, SelectKBest, f_classif
 DATA = "./output_sampled_1000.csv"
 
 
+
 def plotROCCurveBase():
     plt.figure()
     #plt.plot(fpr, tpr, lw=lw)
@@ -44,6 +45,7 @@ def crossValidationTestAndPlot(estimator, name, data, labels, cvNum = 5, addAver
         print("Fitting estimator")
         fit = estimator.fit(data.iloc[train], labels[train])
         print("Done fitting")
+
         y_predict = fit.predict_proba(data.iloc[test])
         fpr, tpr, thresholds = roc_curve(labels[test], y_predict[:, 1])
         th.append(np.interp(mean_fpr, fpr, thresholds)) 
@@ -79,6 +81,7 @@ def encode(data):
     hotEncoder = ce.OneHotEncoder(handle_unknown='ignore', use_cat_names=True)
     data = hotEncoder.fit_transform(data)
     return data
+
 
 def crossValidation(data, labels):
     plotROCCurveBase()
@@ -242,6 +245,7 @@ def main():
     #"CRS_DEP_TIME", "CRS_ELAPSED_TIME", "CRS_ARR_TIME",
     data_full = pd.read_csv(DATA)
     data= data_full #.sample(n=1000)
+
     
 
     labels = []
@@ -251,6 +255,7 @@ def main():
              labels.append(1)
          else:
              labels.append(0)
+
     data = data.drop(dataToDrop, 1)
     sum = 0
     for l in labels:
